@@ -64,7 +64,7 @@ export default function PaymentScreen() {
           api.getLoyaltySummary(accessToken),
         ]);
         setPromotions(promotionsResponse.data ?? []);
-        setCurrentPoints(loyaltyResponse.data.current_points ?? 0);
+        setCurrentPoints(loyaltyResponse.data.loyalty?.available_points ?? 0);
       } catch (error) {
         const message =
           error instanceof ApiError ? error.message : "Không thể tải ưu đãi.";

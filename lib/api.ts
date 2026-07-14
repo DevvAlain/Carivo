@@ -3,6 +3,7 @@ import type {
   AuthTokenPayload,
   AvailableSlotsPayload,
   Booking,
+  BookingInspection,
   Garage,
   LoyaltySummary,
   LoyaltyTierRule,
@@ -15,6 +16,7 @@ import type {
   Survey,
   UserPublic,
   Vehicle,
+  Waitlist,
   WashHistory,
 } from "@/lib/types";
 
@@ -154,6 +156,12 @@ export const api = {
     return request<ApiEnvelope<AuthTokenPayload>>("/auth/login", {
       method: "POST",
       body: { phone, password },
+    });
+  },
+
+  refreshToken() {
+    return request<ApiEnvelope<AuthTokenPayload>>("/auth/refresh", {
+      method: "POST",
     });
   },
 
@@ -355,7 +363,7 @@ export const api = {
   },
 
   getWaitlists(token: string) {
-    return request<ApiEnvelope<unknown[]>>("/waitlists", { token });
+    return request<ApiEnvelope<Waitlist[]>>("/waitlists", { token });
   },
 
   createWaitlist(
@@ -462,6 +470,98 @@ export const api = {
     return request<ApiEnvelope<Survey[]>>("/surveys/available", {
       token,
       query: { booking_id: bookingId },
+    });
+  },
+
+  logoutAll(token: string) {
+    return request<ApiEnvelope<{ message?: string }>>("/auth/logout-all", {
+      method: "POST",
+      token,
+    });
+  },
+
+  changePassword(token: string, currentPassword: string, newPassword: string) {
+    return request<ApiEnvelope<{ message?: string }>>("/auth/change-password", {
+      method: "POST",
+      token,
+      body: { current_password: currentPassword, new_password: newPassword },
+    });
+  },
+
+  getBooking(token: string, id: string) {
+    return request<ApiEnvelope<Booking>>(`/bookings/${id}`, { token });
+  },
+
+  getBookingInspections(token: string, bookingId: string) {
+    return request<ApiEnvelope<BookingInspection[]>>(
+      `/bookings/${bookingId}/inspections`,
+      { token }
+    );
+  },
+
+  getVehicle(token: string, id: string) {
+    return request<ApiEnvelope<Vehicle>>(`/vehicles/${id}`, { token });
+  },
+
+  getPromotion(id: string) {
+    return request<ApiEnvelope<Promotion>>(`/promotions/${id}`);
+  },
+
+  getWaitlist(token: string, id: string) {
+    return request<ApiEnvelope<Waitlist>>(`/waitlists/${id}`, { token });
+  },
+
+  acceptWaitlist(token: string, id: string) {
+    return request<ApiEnvelope<Waitlist>>(`/waitlists/${id}/accept`, {
+      method: "PATCH",
+      token,
+    });
+  },
+
+  cancelWaitlist(token: string, id: string) {
+    return request<ApiEnvelope<Waitlist>>(`/waitlists/${id}/cancel`, {
+      method: "PATCH",
+      token,
+    });
+  },
+
+  getWashHistory(token: string, id: string) {
+    return request<ApiEnvelope<WashHistory>>(`/wash-histories/${id}`, { token });
+  },
+
+  claimWashHistory(token: string, body: { booking_id: string }) {
+    return request<ApiEnvelope<WashHistory>>("/wash-histories/claim", {
+      method: "POST",
+      token,
+      body,
+    });
+  },
+
+  submitSurveyResponse(
+    token: string,
+    surveyId: string,
+    body: { booking_id: string; answers: { question_id: string; value: unknown }[] }
+  ) {
+    return request<ApiEnvelope<unknown>>(`/surveys/${surveyId}/responses`, {
+      method: "POST",
+      token,
+      body,
+    });
+  },
+
+  uploadFile(token: string, formData: FormData) {
+    return request<ApiEnvelope<{ url: string; id: string }>>("/uploads", {
+      method: "POST",
+      token,
+      body: formData,
+      isFormData: true,
+    });
+  },
+
+  deleteUpload(token: string, id: string) {
+    return request<ApiEnvelope<{ message?: string }>>(`/uploads/${id}`, {
+      method: "DELETE",
+      token,
     });
   },
 };

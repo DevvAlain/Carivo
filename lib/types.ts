@@ -46,15 +46,36 @@ export interface PhoneVerificationToken {
 export interface Garage {
   id: string;
   name: string;
+  garage_code?: string;
+  phone?: string | null;
+  email?: string | null;
   address?: string;
-  city?: string | null;
+  ward?: string | null;
   district?: string | null;
+  city?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
+  opening_time?: string | null;
+  closing_time?: string | null;
+  slot_interval_minutes?: number;
+  late_grace_minutes?: number;
   description?: string | null;
   image_url?: string | null;
   cover_image_url?: string | null;
   rating_average?: number | null;
   rating_count?: number | null;
   is_active?: boolean;
+}
+
+export interface BookingInspection {
+  id: string;
+  booking_id: string;
+  inspector_id?: string | null;
+  vehicle_condition?: string | null;
+  notes?: string | null;
+  inspection_images?: string[];
+  created_at: string;
+  updated_at?: string;
 }
 
 export type VehicleType = "MOTORBIKE" | "CAR";
@@ -110,12 +131,25 @@ export interface Promotion {
   end_at?: string;
 }
 
+export interface LoyaltyAccount {
+  id: string;
+  customer_id?: string;
+  current_tier: "BRONZE" | "SILVER" | "GOLD" | "PLATINUM" | string;
+  total_points: number;
+  available_points: number;
+  redeemed_points: number;
+  expired_points: number;
+  total_spent: number;
+  total_visits: number;
+  last_visit_at?: string | null;
+  created_at?: string;
+  updated_at?: string;
+}
+
 export interface LoyaltySummary {
-  current_points: number;
-  lifetime_points?: number;
-  tier?: "BRONZE" | "SILVER" | "GOLD" | "PLATINUM" | string;
-  next_tier?: string | null;
-  points_to_next_tier?: number | null;
+  loyalty: LoyaltyAccount;
+  current_tier_rule?: LoyaltyTierRule | null;
+  next_tier_rule?: LoyaltyTierRule | null;
 }
 
 export interface LoyaltyTransaction {
@@ -129,11 +163,17 @@ export interface LoyaltyTransaction {
 
 export interface LoyaltyTierRule {
   id: string;
-  tier: string;
-  min_points: number;
-  multiplier?: number;
-  benefits?: string[] | null;
+  tier_name: string;
+  booking_window_days?: number;
+  max_upcoming_bookings?: number;
+  point_multiplier?: number;
+  priority_level?: number;
+  min_total_spent?: number;
+  min_total_visits?: number;
+  min_total_points?: number;
   is_active?: boolean;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface AvailableSlot {
@@ -220,6 +260,29 @@ export interface WashHistory {
   paid_at?: string;
   service_completed_at?: string;
   booking?: Pick<Booking, "id" | "start_time" | "status" | "payment_status"> | null;
+  garage?: Garage | null;
+  vehicle?: Vehicle | null;
+  service_package?: ServicePackage | null;
+}
+
+export interface Waitlist {
+  id: string;
+  customer_id?: string;
+  vehicle_id?: string;
+  garage_id?: string;
+  service_package_id?: string;
+  add_on_service_ids?: string[];
+  vehicle_type?: VehicleType;
+  desired_start_time: string;
+  status: "WAITING" | "OFFERED" | "ACCEPTED" | "CANCELED" | "EXPIRED" | string;
+  offered_at?: string | null;
+  offer_expires_at?: string | null;
+  accepted_at?: string | null;
+  canceled_at?: string | null;
+  cancel_reason?: string | null;
+  expired_at?: string | null;
+  created_booking_id?: string | null;
+  note?: string | null;
   garage?: Garage | null;
   vehicle?: Vehicle | null;
   service_package?: ServicePackage | null;

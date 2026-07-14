@@ -94,14 +94,14 @@ export default function RewardsScreen() {
             <Star size={20} color="#ffffff" strokeWidth={2.4} />
           </View>
           <Text className="text-white text-4xl font-bold mt-4">
-            {summary?.current_points ?? 0}
+            {summary?.loyalty?.available_points ?? 0}
           </Text>
           <Text className="text-white/80 text-sm mt-1">Điểm khả dụng</Text>
           <Text className="text-white/80 text-sm mt-5">
-            Hạng hiện tại: {summary?.tier ?? "N/A"}
+            Hạng hiện tại: {summary?.loyalty?.current_tier ?? "N/A"}
           </Text>
           <Text className="text-white/80 text-sm mt-1">
-            Hạng tiếp theo: {summary?.next_tier ?? "Không có"}
+            Hạng tiếp theo: {summary?.next_tier_rule?.tier_name ?? "Không có"}
           </Text>
         </View>
 
@@ -114,11 +114,11 @@ export default function RewardsScreen() {
             {tierRules.map((rule) => (
               <View key={rule.id} className="rounded-xl border border-border p-4">
                 <View className="flex-row items-center justify-between">
-                  <Text className="font-semibold text-foreground">{rule.tier}</Text>
+                  <Text className="font-semibold text-foreground">{rule.tier_name}</Text>
                   <ChevronRight size={16} color="#7a8599" strokeWidth={2.8} />
                 </View>
                 <Text className="text-sm text-muted-foreground mt-1">
-                  Từ {rule.min_points} điểm
+                  Từ {rule.min_total_points} điểm
                 </Text>
               </View>
             ))}

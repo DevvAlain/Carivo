@@ -49,7 +49,7 @@ export default function HomeScreen() {
         ]);
 
         setVehicles(vehiclesResponse.data ?? []);
-        setLoyaltyPoints(String(loyaltyResponse.data.current_points ?? 0));
+        setLoyaltyPoints(String(loyaltyResponse.data.loyalty?.available_points ?? 0));
       } else {
         setVehicles([]);
         setLoyaltyPoints("0");

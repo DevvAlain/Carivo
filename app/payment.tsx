@@ -36,6 +36,8 @@ export default function PaymentScreen() {
     vehiclePlate?: string;
     startTime?: string;
     price?: string;
+    addOnServiceIds?: string;
+    addonTotal?: string;
   }>();
   const { accessToken, isAuthenticated } = useApp();
   const [selectedPayment, setSelectedPayment] = useState("card");
@@ -48,7 +50,10 @@ export default function PaymentScreen() {
   const [currentPoints, setCurrentPoints] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  const basePrice = Number(params.price ?? 0);
+  const addonIds = params.addOnServiceIds
+    ? params.addOnServiceIds.split(",").filter(Boolean)
+    : [];
+  const basePrice = Number(params.price ?? 0) + Number(params.addonTotal ?? 0);
   const total = Math.max(0, basePrice - promoDiscount - pointsDiscount);
 
   useEffect(() => {
@@ -165,6 +170,7 @@ export default function PaymentScreen() {
         garage_id: params.garageId,
         vehicle_id: params.vehicleId,
         service_package_id: params.servicePackageId,
+        add_on_service_ids: addonIds.length > 0 ? addonIds : undefined,
         start_time: params.startTime,
         promotion_code: promoCode || undefined,
         used_points: Number(usedPoints || 0) || undefined,

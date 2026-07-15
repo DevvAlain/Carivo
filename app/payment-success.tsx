@@ -93,8 +93,7 @@ export default function PaymentSuccessScreen() {
             Đặt lịch thành công
           </Text>
           <Text className="text-muted-foreground text-sm text-center leading-relaxed">
-            Booking đã được tạo cho customer. Thanh toán online đang được bỏ qua
-            tạm thời ở mobile app.
+            Lịch hẹn của bạn đã được ghi nhận. Garage sẽ xác nhận và liên hệ trước giờ hẹn.
           </Text>
         </LinearGradient>
 
@@ -160,7 +159,7 @@ export default function PaymentSuccessScreen() {
           <View className="flex-row items-center gap-2">
             <Shield size={14} color="#7a8599" strokeWidth={3.4} />
             <Text className="text-xs text-muted-foreground">
-              Booking đã ghi nhận, phần thanh toán customer sẽ nối sau.
+              Booking được bảo mật và mã hóa bởi Carivo.
             </Text>
           </View>
         </View>

@@ -79,8 +79,8 @@ export default function ProfileScreen() {
     return (
       <SafeAreaView className="flex-1 bg-background">
         <ScreenState
-          title="Hồ sơ customer"
-          description="Đăng nhập để xem booking, xe đã lưu, lịch sử rửa xe và thông báo."
+          title="Hồ sơ của tôi"
+          description="Đăng nhập để xem lịch hẹn, xe đã lưu, lịch sử rửa xe và thông báo."
           actionLabel="Đăng nhập"
           onAction={() => router.push("/login")}
         />
@@ -94,7 +94,7 @@ export default function ProfileScreen() {
         <ScreenState
           loading
           title="Đang tải hồ sơ"
-          description="Đang lấy dữ liệu customer."
+          description="Đang lấy dữ liệu của bạn."
         />
       </SafeAreaView>
     );
@@ -247,7 +247,14 @@ export default function ProfileScreen() {
                   </Text>
                   <View className="flex-row items-center justify-between mt-3">
                     <Text className="text-primary font-semibold">
-                      {booking.status}
+                      {booking.status === "PENDING" ? "Chờ xác nhận"
+                        : booking.status === "CONFIRMED" ? "Đã xác nhận"
+                        : booking.status === "CHECKED_IN" ? "Đã check-in"
+                        : booking.status === "IN_PROGRESS" ? "Đang rửa"
+                        : booking.status === "COMPLETED" ? "Hoàn tất"
+                        : booking.status === "CANCELED" ? "Đã hủy"
+                        : booking.status === "NO_SHOW" ? "Vắng mặt"
+                        : booking.status}
                     </Text>
                     {(booking.status === "PENDING" || booking.status === "CONFIRMED") && (
                       <TouchableOpacity
@@ -313,7 +320,7 @@ export default function ProfileScreen() {
           <TouchableOpacity
             onPress={async () => {
               await logout();
-              router.replace("/(tabs)");
+              router.replace("/login");
             }}
             className="rounded-xl bg-card px-4 py-4 flex-row items-center gap-3"
           >

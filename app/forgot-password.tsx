@@ -37,7 +37,7 @@ export default function ForgotPasswordScreen() {
       setStep(2);
       Alert.alert(
         "Đã gửi yêu cầu",
-        "Backend đã nhận yêu cầu đặt lại mật khẩu. Nhập reset token khi bạn có token từ hệ thống."
+        "Yêu cầu đặt lại mật khẩu đã được gửi. Nhập token bạn nhận được từ hệ thống để tiếp tục."
       );
     } catch (error) {
       const message =
@@ -96,8 +96,8 @@ export default function ForgotPasswordScreen() {
               Khôi phục tài khoản
             </Text>
             <Text className="text-sm text-muted-foreground mt-2 leading-6">
-              App customer dùng flow reset token của backend. Gửi yêu cầu trước,
-              sau đó nhập reset token để đặt mật khẩu mới.
+              Nhập số điện thoại đã đăng ký. Sau khi gửi yêu cầu, bạn sẽ nhận được
+              token để đặt lại mật khẩu.
             </Text>
           </View>
 

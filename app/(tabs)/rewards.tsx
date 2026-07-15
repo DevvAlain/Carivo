@@ -47,7 +47,7 @@ export default function RewardsScreen() {
     return (
       <SafeAreaView className="flex-1 bg-background">
         <ScreenState
-          title="Điểm thưởng customer"
+          title="Điểm thưởng"
           description="Đăng nhập để xem điểm tích lũy, hạng thành viên và lịch sử cộng/trừ điểm."
           actionLabel="Đăng nhập"
           onAction={() => router.push("/login")}
@@ -62,7 +62,7 @@ export default function RewardsScreen() {
         <ScreenState
           loading
           title="Đang tải điểm thưởng"
-          description="Đang lấy dữ liệu loyalty của customer."
+          description="Đang lấy dữ liệu điểm tích lũy của bạn."
         />
       </SafeAreaView>
     );
@@ -85,7 +85,7 @@ export default function RewardsScreen() {
         <View className="px-4 pt-5 pb-3">
           <Text className="text-3xl font-bold text-foreground">Điểm thưởng</Text>
           <Text className="text-sm text-muted-foreground mt-2">
-            Theo dõi loyalty và quyền lợi dành cho customer.
+            Theo dõi điểm tích lũy và quyền lợi thành viên của bạn.
           </Text>
         </View>
 

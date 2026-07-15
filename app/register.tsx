@@ -128,8 +128,8 @@ export default function RegisterScreen() {
               Bắt đầu với Carivo
             </Text>
             <Text className="text-sm text-muted-foreground mt-2 leading-6">
-              Xác thực số điện thoại trước, sau đó hoàn thiện hồ sơ customer để
-              đặt lịch trên ứng dụng.
+              Xác thực số điện thoại trước, sau đó hoàn thiện hồ sơ để bắt đầu
+              đặt lịch rửa xe trên ứng dụng.
             </Text>
           </View>
 

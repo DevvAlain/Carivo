@@ -10,7 +10,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ArrowLeft, ArrowRight, CircleAlert } from "lucide-react-native";
+import { ArrowLeft, ArrowRight } from "lucide-react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import BookingInfoCard from "@/components/payment/BookingInfoCard";
 import PaymentMethodList from "@/components/payment/PaymentMethodList";
@@ -174,10 +174,7 @@ export default function PaymentScreen() {
         start_time: params.startTime,
         promotion_code: promoCode || undefined,
         used_points: Number(usedPoints || 0) || undefined,
-        note:
-          selectedPayment === "card"
-            ? "Customer xác nhận booking từ mobile app."
-            : `Phương thức UI đã chọn: ${selectedPayment}. Thanh toán online chưa nối cho app customer.`,
+        note: undefined,
       });
 
       router.replace({
@@ -241,19 +238,6 @@ export default function PaymentScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 16 }}
       >
-        <View className="mx-4 mb-4 rounded-xl bg-secondary px-4 py-3 flex-row gap-3">
-          <CircleAlert size={20} color="#1a5fd4" strokeWidth={2.4} />
-          <View className="flex-1">
-            <Text className="font-semibold text-primary">
-              Thanh toán online đang tạm bỏ qua
-            </Text>
-            <Text className="text-sm text-primary/80 mt-1 leading-5">
-              Backend hiện chưa có endpoint customer riêng để khởi tạo PayOS.
-              App sẽ tạo booking trước, còn thanh toán thực tế xử lý sau.
-            </Text>
-          </View>
-        </View>
-
         <BookingInfoCard
           info={{
             serviceName: params.serviceName ?? "Dịch vụ đã chọn",

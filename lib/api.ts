@@ -529,18 +529,24 @@ export const api = {
     return request<ApiEnvelope<WashHistory>>(`/wash-histories/${id}`, { token });
   },
 
-  claimWashHistory(token: string, body: { booking_id: string }) {
-    return request<ApiEnvelope<WashHistory>>("/wash-histories/claim", {
+  claimWashHistory(token: string) {
+    return request<ApiEnvelope<{ claimed_bookings: number; claimed_wash_histories: number; linked_promotion_usages: number }>>("/wash-histories/claim", {
       method: "POST",
       token,
-      body,
+    });
+  },
+
+  deleteAllNotifications(token: string) {
+    return request<ApiEnvelope<{ message?: string }>>("/notifications", {
+      method: "DELETE",
+      token,
     });
   },
 
   submitSurveyResponse(
     token: string,
     surveyId: string,
-    body: { booking_id: string; answers: { question_id: string; value: unknown }[] }
+    body: { booking_id: string; answers: { question_id: string; value: unknown }[]; upload_ids?: string[] }
   ) {
     return request<ApiEnvelope<unknown>>(`/surveys/${surveyId}/responses`, {
       method: "POST",

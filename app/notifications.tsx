@@ -89,20 +89,45 @@ export default function NotificationsScreen() {
           </TouchableOpacity>
           <Text className="text-lg font-bold text-primary">Thông báo</Text>
         </View>
-        <TouchableOpacity
-          onPress={async () => {
-            try {
-              await api.markAllNotificationsRead(accessToken!);
-              await loadData();
-            } catch (error) {
-              const message =
-                error instanceof ApiError ? error.message : "Không thể cập nhật thông báo.";
-              Alert.alert("Lỗi", message);
-            }
-          }}
-        >
-          <Text className="text-sm font-medium text-primary">Đọc tất cả</Text>
-        </TouchableOpacity>
+        <View className="flex-row items-center gap-3">
+          <TouchableOpacity
+            onPress={async () => {
+              try {
+                await api.markAllNotificationsRead(accessToken!);
+                await loadData();
+              } catch (error) {
+                const message =
+                  error instanceof ApiError ? error.message : "Không thể cập nhật thông báo.";
+                Alert.alert("Lỗi", message);
+              }
+            }}
+          >
+            <Text className="text-sm font-medium text-primary">Đọc tất cả</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              Alert.alert("Xóa tất cả thông báo", "Bạn có chắc muốn xóa toàn bộ thông báo?", [
+                { text: "Hủy", style: "cancel" },
+                {
+                  text: "Xóa",
+                  style: "destructive",
+                  onPress: async () => {
+                    try {
+                      await api.deleteAllNotifications(accessToken!);
+                      await loadData();
+                    } catch (error) {
+                      const message =
+                        error instanceof ApiError ? error.message : "Không thể xóa thông báo.";
+                      Alert.alert("Lỗi", message);
+                    }
+                  },
+                },
+              ]);
+            }}
+          >
+            <Trash2 size={18} color="#ef4444" strokeWidth={2.2} />
+          </TouchableOpacity>
+        </View>
       </View>
 
       <ScrollView
